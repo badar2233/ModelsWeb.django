@@ -79,27 +79,28 @@
 <body>
   <!-- <h1 style="text-align: center;color: brown;">signup</h1> -->
 
-<form class="signup-form" method="post" action="{% url 'createblog' %}" enctype="multipart/form-data">
+<form class="signup-form" method="post" action="{% url 'updateblog' blog.id %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <h2>Create New Blog</h2>
+    <h2>Update Blog</h2>
 
     <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" id="title" name="title" required>
+      <label for="username">Title</label>
+      <input type="text" id="username" name="title" required>
+    </div>
+
+
+     <div class="form-group">
+      <label for="gmail">Content</label>
+      <textarea type="email" id="gmail" name="content" required rows="4"></textarea>
     </div>
 
     <div class="form-group">
-      <label for="content">Content</label>
-      <textarea id="content" name="content" required rows="4"></textarea>
+      <label for="password">Image</label>
+      <input type="file" id="password" name="image" required>
     </div>
 
-    <div class="form-group">
-      <label for="blog_image">Image</label>
-      <input type="file" id="blog_image" name="blog_image" required>
-    </div>
-
-    <button type="submit" class="submit-btn">Create</button>
-</form>
+    <button type="submit" class="submit-btn">Update</button>
+  </form>
 
 
     

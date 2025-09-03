@@ -1,4 +1,4 @@
-from .views import home,signupview,loginview,dashboardview,blogdetailview,CreateBlogView
+from .views import (home,signupview,loginview,dashboardview,blogdetailview,CreateBlogView,EditBlogView,delte_blog)
 from django.urls import path
 
 urlpatterns=[
@@ -8,6 +8,8 @@ urlpatterns=[
     path ('dashboard/',dashboardview.as_view(), name='dashboard'),
     path ('blogdetail/<int:id>',blogdetailview.as_view(), name='blogdetail'),
     path ('createblog', CreateBlogView.as_view(), name='createblog'),
+    path ('updateblog/<int:id>', EditBlogView.as_view(),name='updateblog'),
+    path ('deleteblog/<int:id>',delte_blog,name='deleteblog'),
 
 
 

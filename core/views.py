@@ -99,7 +99,7 @@ class CreateBlogView(View):
         print(request.POST)
         title = request.POST.get('title')
         content = request.POST.get('content')
-        blog_image = request.FILES.get('image')
+        blog_image = request.FILES.get('blog_image')
 
         print (title,1111111111111111111)
         print (content,2222222222222222222)
@@ -112,6 +112,39 @@ class CreateBlogView(View):
             blog_image=blog_image,
         )
         return redirect('dashboard')
-        return render(request,'create_blog.html')
+        # return render(request,'create_blog.html')
 
 
+
+class EditBlogView(View):
+    def get(self,request,*args,**kwargs):
+        id=kwargs.get('id')
+        
+
+        blog=Blog.objects.filter(id=id).first()
+        
+        context = {
+            'blog': blog
+          }
+        return render(request,'editblog.html',context)
+    def post(self,request,*args,**kwargs):
+        id= kwargs.get('id')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        blog_image = request.FILES.get('image')
+
+        blog = Blog.objects.filter(id=id).first()
+        blog.title= title
+        blogcontent= content
+        if blog_image:
+            blog.blog_image=blog_image
+            blog.save()
+
+        return redirect('dashboard')
+
+def delte_blog(request,*args,**kwargs):
+    id = kwargs.get('id')
+    blog = Blog.objects.filter(id=id).first()
+    if blog:
+        blog.delete()
+    return redirect('dashboard')

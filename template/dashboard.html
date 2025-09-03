@@ -32,6 +32,7 @@
 
 
     .blog-cards-container {
+  
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
@@ -40,6 +41,7 @@
 
 .blog-card {
   border: 1px solid #e0e0e0;
+  background-image:linear-gradient(red,green,blue);
   border-radius: 8px;
   padding: 1rem;
   background-color: #fafafa;
@@ -109,7 +111,12 @@
      {% if blog.blog_image %}
         <img src="{{blog.blog_image.url}}" alt="">
         {% endif %}
+        <!-- <button class="blue-buttn"><a href="{% url 'updateblog' blog.id %}"> Update</a></button>
+        <button class="blue-buttn"><a href="{% url 'deleteblog' blog.id %}"> Delete</a></button> -->
+
     </div>
+    <button class="blue-buttn"><a href="{% url 'updateblog' blog.id %}"> Update</a></button>
+        <button class="blue-buttn"><a href="{% url 'deleteblog' blog.id %}"> Delete</a></button>
     </div>
   {% endfor %}
 </div>
