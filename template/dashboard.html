@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+ <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00bfff;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+   
+
+
+    .blog-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.blog-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fafafa;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.blog-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.blog-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.blog-content p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+ .blue-button {
+            background-color: #007bff; /* Bootstrap-style blue */
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 15px;
+        }
+
+        .blue-button:hover {
+            background-color: #1473da; /* Darker on hover */
+        }
+
+  </style>
+</head>
+<body>
+
+
+
+
+
+<h2>Welcome to Dashboard</h2>
+<div>
+  <button class="blue-button"><a href="{% url 'createblog' %}"> Create New Blog</a></button>
+
+</div>
+
+<div class="blog-cards-container">
+  {% for blog in blogs %}
+    <div class="blog-card">
+     
+     <h3 class="blog-title"><a href="{% url 'blogdetail' blog.id %}">{{ blog.title }}</a></h3>
+
+      
+      <div class="blog-content">
+        <p>{{ blog.content }}</p>
+        <!-- <img class="blog-image" src="{{ blog.blog_img.pubg.jpg }}" alt="{{ blog.title }}"> -->
+     {% if blog.blog_image %}
+        <img src="{{blog.blog_image.url}}" alt="">
+        {% endif %}
+    </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
