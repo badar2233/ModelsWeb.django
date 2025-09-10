@@ -1,6 +1,11 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from .models import Blog
+from .models import Blog,User
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth import login
+
+#shw blogs to respective users
+#Give assess to 
 
 # Create your views here.
 def home(request):
@@ -18,14 +23,22 @@ class signupview(View):
         username=request.POST.get('username')
         gmail=request.POST.get('gmail')
         password=request.POST.get('password')
+        first_name=request.POST.get('firstname')
         print(username,gmail,password)
 
         if username and gmail and password:
-            if username=='badar' and gmail=='badar@gmail' and password=='badar123':
-                return redirect('login')
-            else:
-                return render(request,'signup.html', {'error':'invalid ceredetail'})    
-        # print(request.POST)
+            user = User.objects.create(
+                username=username,
+                email=gmail,
+                first_name=first_name,
+            )
+            passwordssss = make_password(password)
+            user.password = passwordssss
+            user.save()
+            return redirect('login')
+        #     else:
+        #         return render(request,'signup.html', {'error':'invalid ceredetail'})    
+        # # print(request.POST)
         # print("simple query")
         # return redirect('login')
         # return render(request,'signup.html',{'message': 'Signup sucessful'})
@@ -38,24 +51,20 @@ class loginview(View):
 
     def post(self,request):
         username=request.POST.get('username')
-        
         password=request.POST.get('password')
         print(username,password)
 
         if username and password:
-            if username=='badar' and password=='badar123':
-                # messages.sucess(request,'Login sucessfull')
-                # return redirect('login')
+            user= User.objects.filter(username=username).first()
+            print(check_password(password,user.password))
+            if user and check_password(password,user.password):
+                print(user)
+                login(request, user)
+            
                 return redirect('dashboard')
-            else:
-                return render(request,'login.html', {'error':'invalid ceredetail'})
-
-        # messages.error(request,'invaid')
-        # return render(request,'login.html')
-        return redirect('dashboard')
-    # def login_sucess(request):
-    #     # return redirect('dashboard')
-
+            
+        return redirect('login')
+   
 class dashboardview(View):
     def get(self,request):
        
@@ -67,11 +76,7 @@ class dashboardview(View):
         return render(request,'dashboard.html',context)
 
 
-# class BlogView(View):
-#     def get(self,request):
-        
 
-#         return render(request,'blog.html')
 
 
 
