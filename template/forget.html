@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- <h2>Reset Your Password</h2>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send reset link</button>
+</form>
+<p><a href="{% url 'login' %}"></a></p> -->
+
+<form class="login-form" method="post" action="{% url 'forget' %}">
+    {% csrf_token %}
+    <h2>Forget Password</h2>
+
+    <div class="form-group">
+      <label for="gmail">Gmail</label>
+      <input type="email" id="gmail" name="gmail" required>
+    </div>
+
+
+
+    <button type="submit" class="submit-btn">Send OTP</button></br>
+
+
+    <a href="{% url 'login' %}">Return to login page</a>
+     
+  </form>    
+</body>
+</html>

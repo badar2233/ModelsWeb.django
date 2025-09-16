@@ -16,6 +16,7 @@
       text-align: center;
       color: #00bfff;
       margin-bottom: 30px;
+      scroll-behavior: smooth;
     }
 
     table {
@@ -41,7 +42,9 @@
 
 .blog-card {
   border: 1px solid #e0e0e0;
-  background-image:linear-gradient(red,green,blue);
+  background-image:linear-gradient(rgb(233, 233, 233),rgb(151, 151, 151),rgb(0, 0, 0));
+  /* background-image: url(./card.jpg); */
+  /* background-image: url('graphic'); */
   border-radius: 8px;
   padding: 1rem;
   background-color: #fafafa;
@@ -109,14 +112,19 @@
         <p>{{ blog.content }}</p>
         <!-- <img class="blog-image" src="{{ blog.blog_img.pubg.jpg }}" alt="{{ blog.title }}"> -->
      {% if blog.blog_image %}
-        <img src="{{blog.blog_image.url}}" alt="">
+        <img style="width: 150px; height: 160px;" src="{{blog.blog_image.url}}" alt="">
         {% endif %}
         <!-- <button class="blue-buttn"><a href="{% url 'updateblog' blog.id %}"> Update</a></button>
         <button class="blue-buttn"><a href="{% url 'deleteblog' blog.id %}"> Delete</a></button> -->
 
     </div>
+    {{blog.author}}  --- {{request.user}}
+    {% if request.user == blog.author %}
     <button class="blue-buttn"><a href="{% url 'updateblog' blog.id %}"> Update</a></button>
         <button class="blue-buttn"><a href="{% url 'deleteblog' blog.id %}"> Delete</a></button>
+        {% else %}
+        <h3>You cannot update & delete this blog...</h3>
+        {% endif %}
     </div>
   {% endfor %}
 </div>

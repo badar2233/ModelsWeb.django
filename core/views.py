@@ -3,6 +3,8 @@ from django.views import View
 from .models import Blog,User
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login
+import random
+from django.core.mail import send_mail
 
 #shw blogs to respective users
 #Give assess to 
@@ -110,11 +112,12 @@ class CreateBlogView(View):
         print (content,2222222222222222222)
         print(blog_image,3333333333333333333)
 
-
+       
         Blog.objects.create(
             title=title,
             content=content,
             blog_image=blog_image,
+            author = request.user,
         )
         return redirect('dashboard')
         # return render(request,'create_blog.html')
@@ -153,3 +156,66 @@ def delte_blog(request,*args,**kwargs):
     if blog:
         blog.delete()
     return redirect('dashboard')
+
+
+
+class forgetView(View):
+    def get (self,request,*args,**kwargs):
+        return render(request, 'forget.html')
+  
+    def post(self,request,*args,**kwargs):
+        email=request.POST.get('gmail')
+        print(email,"gmail")
+        if email:
+            user=User.objects.filter(email=email).first()
+            print(User)
+        if User:
+            print(User)
+            opt = random.randint(10000,99999)
+            message = f"Otp for your forget password is {opt}"
+            send_mail(
+                "Forget Password Email",
+                message,
+                "Star@college",
+                [email]
+            )
+            user.otp = opt
+            user.save()
+            print(opt)
+            return redirect('verify_otp')
+
+        return render(request,'forget.html')
+class verify_otpView(View):
+    def get (self,request,*args,**kwargs):
+        return render(request, 'verify_otp.html')
+
+    def post(self,request,*args,**kwargs):
+        verify_otp = request.POST.get('verify_otp')
+        print('ddsfss', verify_otp)
+        user= User.objects.filter(otp=verify_otp).first()
+        print('gddfsg', user)
+        if user:
+            user.otp = ""
+            user.save()
+            print('otp')
+            return redirect('reset_password', user.id)
+        
+        
+        return render(request,'verify_otp.html')
+
+class reset_passwordView(View):
+    def get (self,request,*args,**kwargs):
+        id= kwargs.get("id")
+        return render(request, 'reset_password.html', {'id':id})
+
+    def post(self,request,*args,**kwargs):
+        password = request.POST.get('password')
+        conf_password= request.POST.get('confirm_password') 
+        id = kwargs.get("id")
+        if password == conf_password:
+            user = User.objects.filter(id=id).first()
+
+            user.password = make_password(password)
+            user.save()
+            return redirect('login')
+  

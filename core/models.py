@@ -2,6 +2,8 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
+
+    otp = models.CharField(max_length=200, null=True,blank=True)
     pass
 
 # Create your models here.
@@ -20,6 +22,7 @@ class User(AbstractUser):
 
 
 class Blog(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True,blank=True)
     title = models.CharField(max_length=200)
     # first_name = models.CharField(max_lenght=200)
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form class="login-form" method="post" action="{% url 'verify_otp' %}">
+    {% csrf_token %}
+    <h2>Verify OTP</h2>
+    <div class="form-group">
+      <label for="password">Enter OTP</label>
+      <input type="password" id="password" name="verify_otp" required></div>
+
+
+    <button type="submit" class="submit-btn">Verify</button>
+   
+
+
+ 
+    </form>
+</body>
+</html>

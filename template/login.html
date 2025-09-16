@@ -91,9 +91,15 @@
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
+      <a href="{% url 'forget' %}">Forget Password</a>
     </div>
 
     <button type="submit" class="submit-btn">Login</button>
+   
+
+
+   <a href="{% url 'signup' %}">Don't have an account:</a>
+     
   </form>    
 </body>
     
